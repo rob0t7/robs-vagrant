@@ -1,2 +1,5 @@
-robs-vagrant
-============
+# robs-vagrant
+
+Vagrant VM setup skeleton.
+
+## Requirements
