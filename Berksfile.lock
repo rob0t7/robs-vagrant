@@ -1,0 +1,2 @@
+cookbook 'apt', :locked_version => '1.10.0'
+cookbook 'build-essential', :locked_version => '1.4.0'
