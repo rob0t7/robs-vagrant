@@ -1,7 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
 Vagrant.configure("2") do |config|
+  # Configure vagrant plugins
+  config.berkshelf.enabled = true
+
+  # SSH Settings
+  config.ssh.forward_agent = true
+  config.ssh.forward_x11 = true
+
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -32,6 +40,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder ".", "/vagrant", nfs: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -85,7 +94,15 @@ Vagrant.configure("2") do |config|
   #   # You may also specify custom JSON attributes:
   #   chef.json = { :mysql_password => "foo" }
   # end
-
+  config.vm.provision :chef_solo do |chef|
+    chef.add_recipe "git"
+    chef.add_recipe "rubyenv::default"
+    chef.json = {
+      "rbenv" => {
+        "group_users" => ['vagrant']
+      }
+    }
+  end
   # Enable provisioning with chef server, specifying the chef server URL,
   # and the path to the validation key (relative to this Vagrantfile).
   #

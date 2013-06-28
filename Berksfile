@@ -1,4 +1,4 @@
 site :opscode
 
-cookbook 'apt'
-cookbook 'build-essential'
+cookbook 'git'
+cookbook 'rubyenv', path: './site-cookbooks/rubyenv'
